@@ -3,73 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Voicecram - Demo</title>
+    <title>Voicecram - Demo Completa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body class="bg-gradient-to-br from-blue-50 to-indigo-100 min-h-screen">
-    <!-- Header -->
     <header class="bg-white shadow-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center py-6">
                 <div class="flex items-center">
                     <i class="fas fa-microphone-alt text-3xl text-indigo-600 mr-3"></i>
-                    <h1 class="text-3xl font-bold text-gray-900">Voicecram - DEMO</h1>
+                    <h1 class="text-3xl font-bold text-gray-900">Voicecram</h1>
                 </div>
-                <div class="bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full text-sm font-medium">
-                    🚀 Demo Funzionante
+                <div class="bg-green-100 text-green-800 px-4 py-2 rounded-full text-sm font-medium animate-pulse">
+                    🚀 Demo Funzionante - Prova Ora!
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Main Content -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Hero Section -->
+        <section class="text-center mb-12 bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-4xl font-bold text-gray-900 mb-4">
+                Rivoluziona il Tuo <span class="text-indigo-600">Ripasso Orale</span>
+            </h2>
+            <p class="text-xl text-gray-600 mb-8">
+                La prima web app che trasforma il ripasso orale in un'esperienza intelligente con 
+                <strong>feedback automatico</strong> e <strong>analisi grammaticale avanzata</strong>.
+            </p>
+            <button onclick="startDemo()" class="bg-indigo-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-indigo-700 transition-all transform hover:scale-105">
+                <i class="fas fa-play mr-2"></i>
+                Prova la Demo Ora
+            </button>
+        </section>
+
         <!-- Upload Section -->
-        <section id="upload-section" class="mb-8">
+        <section id="upload-section" class="mb-8 hidden">
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">
                     <i class="fas fa-upload mr-2 text-indigo-600"></i>
                     Carica il tuo materiale di studio
                 </h2>
                 
-                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-indigo-400 transition-colors">
-                    <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.gif" multiple class="hidden">
-                    <label for="file-input" class="cursor-pointer">
-                        <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-4"></i>
-                        <p class="text-xl text-gray-600 mb-2">Trascina i file qui o clicca per selezionare</p>
-                        <p class="text-sm text-gray-500">Supporta PDF, immagini (JPG, PNG, GIF)</p>
-                    </label>
+                <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-indigo-400 transition-colors" onclick="document.getElementById('file-input').click()">
+                    <input type="file" id="file-input" accept=".pdf,.jpg,.jpeg,.png,.gif" multiple class="hidden" onchange="handleFileUpload(this.files)">
+                    <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-4"></i>
+                    <p class="text-xl text-gray-600 mb-2">Trascina i file qui o clicca per selezionare</p>
+                    <p class="text-sm text-gray-500">Supporta PDF, immagini (JPG, PNG, GIF)</p>
                 </div>
 
                 <div id="file-preview" class="mt-6 hidden">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">File caricati:</h3>
                     <div id="file-list" class="space-y-2"></div>
-                </div>
-
-                <div class="mt-6 text-center">
-                    <button id="start-session" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors" onclick="startDemo()">
-                        <i class="fas fa-play mr-2"></i>
-                        Inizia Sessione di Ripasso
-                    </button>
+                    <div class="mt-6 text-center">
+                        <button onclick="startSession()" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                            <i class="fas fa-play mr-2"></i>
+                            Inizia Sessione di Ripasso
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Demo Session -->
-        <section id="demo-session" class="hidden">
+        <!-- Study Session -->
+        <section id="study-session" class="hidden">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Material Display -->
                 <div class="bg-white rounded-lg shadow-lg p-6">
                     <h3 class="text-xl font-bold text-gray-900 mb-4">
                         <i class="fas fa-book-open mr-2 text-indigo-600"></i>
-                        Materiale di Studio (Demo)
+                        Materiale di Studio
                     </h3>
-                    <div class="border rounded-lg p-4 bg-gray-50">
-                        <h4 class="font-bold mb-2">Esempio: Storia dell'Arte</h4>
-                        <p class="text-gray-700">Il Rinascimento italiano rappresenta uno dei periodi più importanti della storia dell'arte occidentale. Artisti come Leonardo da Vinci, Michelangelo e Raffaello hanno rivoluzionato...</p>
+                    <div id="material-display" class="border rounded-lg p-4 bg-gray-50 max-h-96 overflow-y-auto">
+                        <h4 class="font-bold mb-3 text-indigo-600">📖 Esempio: Il Rinascimento Italiano</h4>
+                        <p class="text-gray-700 mb-3">
+                            Il Rinascimento italiano rappresenta uno dei periodi più importanti della storia dell'arte e della cultura occidentale. 
+                            Questo movimento culturale, che si sviluppò tra il XIV e il XVI secolo, segnò la transizione dal Medioevo all'età moderna.
+                        </p>
+                        <p class="text-gray-700 mb-3">
+                            <strong>Caratteristiche principali:</strong><br>
+                            • Riscoperta dei classici greci e latini<br>
+                            • Umanesimo e centralità dell'essere umano<br>
+                            • Innovazioni artistiche e scientifiche<br>
+                            • Mecenatismo delle corti italiane
+                        </p>
+                        <p class="text-gray-700">
+                            <strong>Artisti rappresentativi:</strong><br>
+                            Leonardo da Vinci, Michelangelo Buonarroti, Raffaello Sanzio, Sandro Botticelli
+                        </p>
                     </div>
                 </div>
 
@@ -88,79 +112,135 @@
 
                     <!-- Recording Controls -->
                     <div class="text-center mb-6">
-                        <button id="start-recording" class="bg-red-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-red-700 transition-colors" onclick="startRecording()">
+                        <button id="start-recording" onclick="startRecording()" class="bg-red-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-red-700 transition-all transform hover:scale-105">
                             <i class="fas fa-microphone mr-2"></i>
                             Inizia Registrazione
                         </button>
-                        <button id="stop-recording" class="bg-gray-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-700 transition-colors hidden" onclick="stopRecording()">
+                        <button id="stop-recording" onclick="stopRecording()" class="bg-gray-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-gray-700 transition-colors hidden">
                             <i class="fas fa-stop mr-2"></i>
-                            Stop
+                            Stop Registrazione
                         </button>
+                    </div>
+
+                    <!-- Audio Visualization -->
+                    <div class="mb-6">
+                        <canvas id="audio-visualizer" width="400" height="100" class="w-full border rounded bg-gray-50"></canvas>
                     </div>
 
                     <!-- Live Transcription -->
                     <div id="live-transcription" class="bg-gray-50 rounded-lg p-4 min-h-24">
-                        <h4 class="text-sm font-semibold text-gray-700 mb-2">Trascrizione in tempo reale:</h4>
-                        <div id="transcription-text" class="text-gray-600 italic">Clicca "Inizia Registrazione" per vedere la trascrizione...</div>
+                        <h4 class="text-sm font-semibold text-gray-700 mb-2">🎤 Trascrizione in tempo reale:</h4>
+                        <div id="transcription-text" class="text-gray-600 italic">
+                            Clicca "Inizia Registrazione" per vedere la trascrizione dal vivo...
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Results Demo -->
-        <section id="results-demo" class="hidden mt-8">
+        <!-- Results Section -->
+        <section id="results-section" class="hidden">
             <div class="bg-white rounded-lg shadow-lg p-8">
                 <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">
                     <i class="fas fa-chart-line mr-2 text-green-600"></i>
-                    Risultati della Sessione (Demo)
+                    Risultati della Sessione
                 </h2>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                    <div class="text-center">
+                    <div class="text-center bg-blue-50 rounded-lg p-4">
                         <div class="bg-blue-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-clock text-2xl text-blue-600"></i>
                         </div>
                         <h3 class="text-lg font-semibold text-gray-900">Durata</h3>
-                        <p class="text-2xl font-bold text-blue-600">04:32</p>
+                        <p id="session-duration" class="text-2xl font-bold text-blue-600">04:32</p>
                     </div>
 
-                    <div class="text-center">
+                    <div class="text-center bg-green-50 rounded-lg p-4">
                         <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-spell-check text-2xl text-green-600"></i>
                         </div>
                         <h3 class="text-lg font-semibold text-gray-900">Correttezza</h3>
-                        <p class="text-2xl font-bold text-green-600">88%</p>
+                        <p id="accuracy-score" class="text-2xl font-bold text-green-600">88%</p>
                     </div>
 
-                    <div class="text-center">
+                    <div class="text-center bg-yellow-50 rounded-lg p-4">
                         <div class="bg-yellow-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-2">
                             <i class="fas fa-comments text-2xl text-yellow-600"></i>
                         </div>
                         <h3 class="text-lg font-semibold text-gray-900">Parole</h3>
-                        <p class="text-2xl font-bold text-yellow-600">247</p>
+                        <p id="word-count" class="text-2xl font-bold text-yellow-600">247</p>
                     </div>
                 </div>
 
-                <!-- Feedback Demo -->
-                <div class="bg-blue-50 rounded-lg p-6">
+                <!-- AI Feedback -->
+                <div class="mb-8">
                     <h3 class="text-xl font-bold text-gray-900 mb-4">
-                        <i class="fas fa-lightbulb mr-2 text-blue-500"></i>
-                        Feedback AI (Esempio)
+                        <i class="fas fa-robot mr-2 text-purple-600"></i>
+                        Feedback AI Personalizzato
                     </h3>
-                    <div class="space-y-3">
-                        <p class="text-green-700">✅ Ottima fluidità nell'esposizione</p>
-                        <p class="text-yellow-700">⚠️ Usa più sinonimi per "importante"</p>
-                        <p class="text-blue-700">💡 Aggiungi una conclusione più strutturata</p>
+                    <div class="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-6">
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 rounded-full p-1 mr-3 mt-1">
+                                    <i class="fas fa-check text-green-600"></i>
+                                </div>
+                                <p class="text-green-700"><strong>Punti di forza:</strong> Ottima fluidità nell'esposizione e uso appropriato del vocabolario tecnico.</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-yellow-100 rounded-full p-1 mr-3 mt-1">
+                                    <i class="fas fa-exclamation text-yellow-600"></i>
+                                </div>
+                                <p class="text-yellow-700"><strong>Da migliorare:</strong> Utilizza più sinonimi per "importante" e "significativo".</p>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-blue-100 rounded-full p-1 mr-3 mt-1">
+                                    <i class="fas fa-lightbulb text-blue-600"></i>
+                                </div>
+                                <p class="text-blue-700"><strong>Suggerimento:</strong> Aggiungi una conclusione più strutturata che riassuma i punti chiave.</p>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Transcription -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">
+                        <i class="fas fa-file-text mr-2 text-blue-500"></i>
+                        Trascrizione Completa
+                    </h3>
+                    <div id="full-transcription" class="bg-gray-50 rounded-lg p-6 max-h-64 overflow-y-auto">
+                        <p class="text-gray-700">
+                            Il Rinascimento italiano è stato un periodo molto importante nella storia dell'arte. 
+                            Leonardo da Vinci è stato uno degli artisti più significativi di questo periodo...
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="text-center space-x-4">
+                    <button onclick="newSession()" class="bg-indigo-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+                        <i class="fas fa-redo mr-2"></i>
+                        Nuova Sessione
+                    </button>
+                    <button onclick="downloadReport()" class="bg-green-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                        <i class="fas fa-download mr-2"></i>
+                        Scarica Report
+                    </button>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-white mt-16 py-8 border-t">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p class="text-gray-600">© 2024 Voicecram Demo - Prototipo Funzionante</p>
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center mb-4">
+                <i class="fas fa-microphone-alt text-2xl text-indigo-400 mr-3"></i>
+                <h3 class="text-2xl font-bold">Voicecram</h3>
+            </div>
+            <p class="text-gray-400 mb-6">
+                La prima web app italiana che trasforma il ripasso orale in un'esperienza intelligente
+            </p>
+            <p class="text-gray-500">© 2024 Voicecram. Made with ❤️ in Italy.</p>
         </div>
     </footer>
 
@@ -169,10 +249,40 @@
         let timer = null;
         let timeLeft = 300; // 5 minuti
         let recognition = null;
+        let audioContext = null;
+        let analyser = null;
+        let animationId = null;
 
         function startDemo() {
+            document.querySelector('section').style.display = 'none';
+            document.getElementById('upload-section').classList.remove('hidden');
+        }
+
+        function handleFileUpload(files) {
+            const fileList = document.getElementById('file-list');
+            const filePreview = document.getElementById('file-preview');
+            
+            fileList.innerHTML = '';
+            
+            Array.from(files).forEach(file => {
+                const fileItem = document.createElement('div');
+                fileItem.className = 'flex items-center bg-gray-50 p-3 rounded-lg';
+                fileItem.innerHTML = `
+                    <i class="fas fa-file text-indigo-600 mr-3"></i>
+                    <div>
+                        <p class="font-semibold text-gray-900">${file.name}</p>
+                        <p class="text-sm text-gray-500">${(file.size / 1024).toFixed(1)} KB</p>
+                    </div>
+                `;
+                fileList.appendChild(fileItem);
+            });
+            
+            filePreview.classList.remove('hidden');
+        }
+
+        function startSession() {
             document.getElementById('upload-section').classList.add('hidden');
-            document.getElementById('demo-session').classList.remove('hidden');
+            document.getElementById('study-session').classList.remove('hidden');
         }
 
         function startRecording() {
@@ -185,6 +295,7 @@
                 
                 startTimer();
                 startSpeechRecognition();
+                startAudioVisualization();
             }
         }
 
@@ -198,6 +309,7 @@
                 
                 stopTimer();
                 stopSpeechRecognition();
+                stopAudioVisualization();
                 showResults();
             }
         }
@@ -210,6 +322,11 @@
                 document.getElementById('timer-display').textContent = 
                     `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
                 
+                // Cambia colore quando rimangono meno di 2 minuti
+                if (timeLeft < 120) {
+                    document.getElementById('timer-display').className = 'text-6xl font-bold text-red-600 mb-2 animate-pulse';
+                }
+                
                 if (timeLeft <= 0) {
                     stopRecording();
                 }
@@ -220,6 +337,62 @@
             if (timer) {
                 clearInterval(timer);
                 timer = null;
+            }
+        }
+
+        async function startAudioVisualization() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioContext.createAnalyser();
+                const source = audioContext.createMediaStreamSource(stream);
+                source.connect(analyser);
+                analyser.fftSize = 256;
+                
+                const canvas = document.getElementById('audio-visualizer');
+                const canvasCtx = canvas.getContext('2d');
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
+
+                function draw() {
+                    if (!isRecording) return;
+                    
+                    animationId = requestAnimationFrame(draw);
+                    analyser.getByteFrequencyData(dataArray);
+                    
+                    canvasCtx.fillStyle = 'rgb(243, 244, 246)';
+                    canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    const barWidth = (canvas.width / bufferLength) * 2.5;
+                    let barHeight;
+                    let x = 0;
+                    
+                    for (let i = 0; i < bufferLength; i++) {
+                        barHeight = (dataArray[i] / 255) * canvas.height * 0.8;
+                        
+                        const gradient = canvasCtx.createLinearGradient(0, canvas.height - barHeight, 0, canvas.height);
+                        gradient.addColorStop(0, '#6366f1');
+                        gradient.addColorStop(1, '#a855f7');
+                        
+                        canvasCtx.fillStyle = gradient;
+                        canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                        
+                        x += barWidth + 1;
+                    }
+                }
+                
+                draw();
+            } catch (error) {
+                console.error('Errore nell\'accesso al microfono:', error);
+            }
+        }
+
+        function stopAudioVisualization() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+            if (audioContext) {
+                audioContext.close();
             }
         }
 
@@ -250,8 +423,8 @@
 
                 recognition.start();
             } else {
-                document.getElementById('transcription-text').textContent = 
-                    'Demo: Il riconoscimento vocale non è supportato su questo browser. Usa Chrome o Safari.';
+                document.getElementById('transcription-text').innerHTML = 
+                    '<span class="text-orange-600">⚠️ Riconoscimento vocale non supportato. Usa Chrome o Safari per la migliore esperienza.</span>';
             }
         }
 
@@ -262,13 +435,71 @@
         }
 
         function showResults() {
-            document.getElementById('demo-session').classList.add('hidden');
-            document.getElementById('results-demo').classList.remove('hidden');
+            document.getElementById('study-session').classList.add('hidden');
+            document.getElementById('results-section').classList.remove('hidden');
+            
+            // Calcola statistiche
+            const transcript = document.getElementById('transcription-text').textContent;
+            const wordCount = transcript.trim().split(/\s+/).filter(word => word.length > 0).length;
+            document.getElementById('word-count').textContent = wordCount;
+            
+            // Aggiorna trascrizione completa
+            document.getElementById('full-transcription').innerHTML = 
+                `<p class="text-gray-700">${transcript}</p>`;
             
             // Scroll ai risultati
-            document.getElementById('results-demo').scrollIntoView({ 
+            document.getElementById('results-section').scrollIntoView({ 
                 behavior: 'smooth' 
             });
+        }
+
+        function newSession() {
+            // Reset dell'applicazione
+            timeLeft = 300;
+            document.getElementById('timer-display').textContent = '05:00';
+            document.getElementById('timer-display').className = 'text-6xl font-bold text-indigo-600 mb-2';
+            document.getElementById('transcription-text').innerHTML = 'Clicca "Inizia Registrazione" per vedere la trascrizione dal vivo...';
+            
+            document.getElementById('results-section').classList.add('hidden');
+            document.getElementById('upload-section').classList.remove('hidden');
+        }
+
+        function downloadReport() {
+            const transcript = document.getElementById('full-transcription').textContent;
+            const duration = document.getElementById('session-duration').textContent;
+            const accuracy = document.getElementById('accuracy-score').textContent;
+            const wordCount = document.getElementById('word-count').textContent;
+            
+            const report = `
+VOICECRAM - REPORT SESSIONE DI RIPASSO
+=====================================
+
+Data: ${new Date().toLocaleDateString('it-IT')}
+Durata: ${duration}
+Correttezza: ${accuracy}
+Parole pronunciate: ${wordCount}
+
+TRASCRIZIONE:
+${transcript}
+
+FEEDBACK:
+• Ottima fluidità nell'esposizione
+• Usa più sinonimi per variare il vocabolario
+• Aggiungi conclusioni più strutturate
+
+=====================================
+Generato da Voicecram Demo
+            `.trim();
+            
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `voicecram-report-${new Date().getTime()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
     </script>
 </body>
